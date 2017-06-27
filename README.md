@@ -5,7 +5,7 @@ Script to export issues from a gitlab project to a csv file for dissemination/re
 Issues can be filtered by state (opened/closed/reopened) or by label.
 
 Defaults to the project defined in `settings.py`, but this can be changed on the command line.
-Requires a file `_credentials.py` in the same directory containing a USERNAME and PASSWORD for the server given in `settings.py`.
+Requires a file `_credentials.py` in the same directory containing a USERNAME and PASSWORD for the server given in `settings.py`. For simplicity, a sample file is included which can be edited and renamed.
 
 ## Installation
 Clone, install the requirements (python-gitlab) and off you go!
