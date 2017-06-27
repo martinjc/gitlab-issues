@@ -2,6 +2,6 @@ import os
 
 COMSC_GITLAB_SERVER = "https://gitlab.cs.cf.ac.uk"
 
-PROJECT = "scmcj1/UGTPOT_demo"
+PROJECT = "scm2mjc/PGT-TPOT-Issues"
 
 OUTPUT_DIRECTORY = os.path.join(os.getcwd(), "reports")
