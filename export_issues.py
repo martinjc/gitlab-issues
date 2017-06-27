@@ -44,17 +44,26 @@ def issue_to_dict(issue):
         issue_data['milestone_duedate'] = issue.milestone.due_date
     return issue_data
 
-def export_issues(gl, project=PROJECT, state=None, filename='issues.csv'):
+def export_issues(gl, project=PROJECT, state=None, labels=None, filename='issues.csv'):
 
     issues_data = []
 
     project = gl.projects.get(project)
 
     for issue in project.issues.list():
-        # are we filtering by state?
-        if state and issue.state in state:
-            issues_data.append(issue_to_dict(issue))
-        elif not state:
+        # are we filtering by state or label?
+        if state or labels:
+            # if we're filtering by both, state must be correct and label must be in labels
+            if state and labels and issue.state in state and set(issue.labels) & set(labels):
+                issues_data.append(issue_to_dict(issue))
+            # if we're filtering just by state then state must be correct
+            elif state and not labels and issue.state in state:
+                issues_data.append(issue_to_dict(issue))
+            # if we're filtering by label then label must be in labels
+            elif not state and labels and set(issue.labels) & set(labels):
+                issues_data.append(issue_to_dict(issue))
+        # if we're not filtering
+        elif not state and not labels:
             issues_data.append(issue_to_dict(issue))
 
     with open(os.path.join(OUTPUT_DIRECTORY, 'issues.csv'), 'w') as output_file:
@@ -70,7 +79,8 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--state', action='store', nargs='*', default=None, choices=['opened', 'closed', 'reopened'], help="export only issues with the given state")
     parser.add_argument('-f', '--filename', action='store', default=None, help="specify filename for output")
     parser.add_argument('-p', '--project', action='store', default=PROJECT, help='specify the project to export issues from')
+    parser.add_argument('-l', '--labels', action='store', nargs='*', default=None, help='specify a list of labels to filter by')
     args = parser.parse_args()
 
     gl = init()
-    export_issues(gl, args.project, args.state, args.filename)
+    export_issues(gl, args.project, args.state, args.labels, args.filename)
