@@ -1,0 +1,2 @@
+USERNAME="scmXXX"
+PASSWORD="mypassword"

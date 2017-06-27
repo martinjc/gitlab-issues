@@ -6,10 +6,10 @@ import argparse
 # external lib imports
 import gitlab
 
-# internal project imports          # settings.py stores project and server info
-from settings import *              # credentials contains USERNAME and PASSWORD
-from _credentials import *          # of user with permission to access the
-                                    # project listed in settings
+# internal project imports                      # settings.py stores project and server info
+from settings import *                          # credentials contains USERNAME and PASSWORD
+from _credentials import USERNAME, PASSWORD     # of user with permission to access the
+                                                # project listed in settings
 
 FIELDS = ['id', 'title', 'description', 'due_date', 'milestone', 'milestone_duedate', 'labels', 'web_url', 'author', 'assignees', 'last_updated', 'state']
 
